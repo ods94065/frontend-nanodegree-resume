@@ -235,3 +235,4 @@ var projects = {
 [bio, education, work, projects].forEach(function (section) {
     section.display();
 });
+$('#mapDiv').append(googleMap);
