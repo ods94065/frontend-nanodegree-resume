@@ -97,4 +97,58 @@ var bio = {
     }
 };
 
+var education = {
+    schools: [
+        {
+            name: 'Stanford University',
+            location: 'Stanford, CA',
+            degree: 'BA',
+            majors: ['Music'],
+            dates: 2003,
+            url: 'http://www.stanford.edu'
+        }
+    ],
+    onlineCourses: [
+        {
+            title: 'Front-End Nanodegree',
+            school: 'Udacity',
+            date: 2015,
+            url: 'https://www.udacity.com'
+        }
+    ],
+    display: function () {
+        var education = $('#education');
+        education.append(
+            $.map(this.schools, this.formatSchool),
+            HTMLonlineClasses,
+            $.map(this.onlineCourses, this.formatOnlineCourse)
+        );
+    },
+    formatSchool: function (school) {
+        var schoolLink = $(
+            format(HTMLschoolName, school.name) +
+                format(HTMLschoolDegree, school.degree)
+        );
+        schoolLink.attr('href', school.url);
+        return $(HTMLschoolStart).append(
+            schoolLink,
+            format(HTMLschoolDates, school.dates),
+            format(HTMLschoolLocation, school.location),
+            format(HTMLschoolMajor, school.majors.join(', '))
+        );
+    },
+    formatOnlineCourse: function (course) {
+        var courseLink = $(
+            format(HTMLonlineTitle, course.title) +
+                format(HTMLonlineSchool, course.school)
+        );
+        courseLink.attr('href', course.url);
+        return $(HTMLschoolStart).append(
+            courseLink,
+            format(HTMLonlineDates, course.date)
+        );
+    }
+};
+
 bio.display();
+education.display();
