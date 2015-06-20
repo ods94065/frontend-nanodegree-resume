@@ -188,6 +188,49 @@ var work = {
     }
  };
 
-bio.display();
-education.display();
-work.display();
+var projects = {
+    projects: [
+        {
+            title: 'Optimize Video Upload Pipeline',
+            dates: '2015',
+            description: 'Brought the video upload success rate from 80% to ' +
+                'over 98% by fixing race conditions and instituting ' +
+                'queue-based throttling of YouTube API calls.',
+            images: ['images/youtube.png']
+        },
+        {
+            title: 'Launch Udacity\'s Paid Course Offering',
+            dates: '2013–2014',
+            description: 'Refactored email templates and finished off paid ' +
+                'course enrollment subsystem.',
+            images: ['images/vidya.png']
+        },
+        {
+            title: 'PayPal Standard Base',
+            dates: '2010–2011',
+            description: 'Technical lead and architect of a project to ' +
+                'migrate the entire development organization to a new ' +
+                'operating system; helped document and standardize ' +
+                'development tool and library versions.',
+            images: ['images/redhat.jpg']
+        }
+    ],
+    display: function () {
+        $('#projects').append(
+            $.map(this.projects, this.formatProject));
+    },
+    formatProject: function (project) {
+        return $(HTMLprojectStart).append(
+            format(HTMLprojectTitle, project.title),
+            format(HTMLprojectDates, project.dates),
+            format(HTMLprojectDescription, project.description),
+            $.map(project.images, function (image) {
+                return format(HTMLprojectImage, image);
+            })
+        );
+    }
+};
+
+[bio, education, work, projects].forEach(function (section) {
+    section.display();
+});
