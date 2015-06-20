@@ -1,0 +1,100 @@
+/*
+ * Generates a string from the given format and set of named arguments.
+ *
+ * Arguments:
+ *   formatString: (String) contains substitution expressions of the form %foo%,
+ *     where "foo" is a substitution name. The same substitution expression can
+ *     appear multiple times in the string. Substitution names must be words
+ *     (alphanumeric plus underscore). The expression %% can appear as well,
+ *     which will be replaced with a single percent (%).
+ *   arg: (String) the value that will be substituted for the substitution name
+ *     'data'.
+ *   moreArgs: (Object) an object whose property names are additional
+ *     substitution names and whose values are the strings to substitute for
+ *     the substitution expressions corresponding to those names.
+ * Returns: a string with the substitution expressions replaced by the
+ *   corresponding values in arg and moreArgs (if supplied). If an expression
+ *   has no corresponding value, it will be replaced by the empty string.
+ */
+var format = function (formatString, arg, moreArgs) {
+    var escapeExpr = /%(\w*)%/g,
+        result = [],
+        lastIndex = 0,
+        argName;
+    while ((match = escapeExpr.exec(formatString)) !== null) {
+        // append everything from the end of the last match up to the start of
+        // this match
+        result.push(formatString.slice(lastIndex, match.index));
+        // push the arg corresponding to the matched escape expression
+        argName = match[1];
+        if (!argName) {
+            result.push('%');
+        } else if (argName === 'data' && arg) {
+            result.push(arg);
+        } else if (moreArgs && moreArgs.hasOwnProperty(argName)) {
+            result.push(moreArgs[argName]);
+        }
+        // remember where the end of this match is; the next iteration picks up
+        // from there
+        lastIndex = escapeExpr.lastIndex;
+    }
+    // if there's anything left at the end of the string, append it
+    result.push(formatString.slice(lastIndex));
+    return result.join('');
+};
+
+var bio = {
+    name: "Owen Smith",
+    role: "Software Wrangler",
+    contacts: {
+        mobile: "510-684-5434",
+        email: "ods94043@yahoo.com",
+        github: "ods94065",
+        twitter: "ods94043",
+        location: "Redwood City, CA"
+    },
+    welcomeMessage: "I'm a senior software developer with particular " +
+        "interest in internet technologies, programming languages, " +
+        "functional programming, and emerging technologies.",
+    skills: [
+        "Web Development",
+        "Deployment",
+        "Leadership",
+        "Communication",
+        "Mentoring"
+    ],
+    biopic: "images/owen.jpg",
+    display: function () {
+        header = $('#header');
+
+        // these need to go before the contact list
+        header.prepend(
+            format(HTMLheaderName, this.name),
+            format(HTMLheaderRole, this.role));
+
+        $('#topContacts').append(
+            $.map(this.contacts, this.formatContact));
+
+        // these go after the contact list
+        header.append(
+            format(HTMLbioPic, this.biopic),
+            format(HTMLwelcomeMsg, this.welcomeMessage),
+            HTMLskillsStart);
+
+        // this element was in HTMLskillsStart and can now be accessed
+        $('#skills').append(
+            $.map(this.skills, this.formatSkill));
+
+        // footer gets same set of skills
+        $('#footerContacts').append(
+            $.map(this.contacts, this.formatContact));
+    },
+    formatSkill: function (skill) {
+        return format(HTMLskills, skill)
+    },
+    formatContact: function (contactValue, fieldName) {
+        return format(HTMLcontactGeneric, contactValue, {contact: fieldName});
+    }
+};
+
+bio.display();
