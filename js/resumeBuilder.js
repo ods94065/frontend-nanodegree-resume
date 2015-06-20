@@ -145,7 +145,8 @@ var education = {
         courseLink.attr('href', course.url);
         return $(HTMLschoolStart).append(
             courseLink,
-            format(HTMLonlineDates, course.date)
+            format(HTMLonlineDates, course.date),
+            format(HTMLonlineURL, course.url)
         );
     }
 };
