@@ -150,5 +150,44 @@ var education = {
     }
 };
 
+var work = {
+    jobs: [
+        {
+            employer: 'Udacity, Inc.',
+            title: 'Back-End Engineering Lead',
+            location: 'Mountain View, CA',
+            dates: '2013–present',
+            description: 'I am leading a small, elite team of engineers to ' +
+                'revolutionize the world of education. Most of my work is in ' +
+                'a support role, guiding and reviewing the work of the team ' +
+                'across all back-end systems.',
+        },
+        {
+            employer: 'PayPal, Inc.',
+            title: 'Senior Member of Technical Staff',
+            location: 'San Jose, CA',
+            dates: '2003–2013',
+            description: 'I started at PayPal as a nearly entry-level ' +
+                'software engineer and concluded as one of the leaders of ' +
+                'the engineering and operations organizations.',
+        }
+    ],
+    display: function () {
+        $('#workExperience').append(
+            $.map(this.jobs, this.formatJob));
+    },
+    formatJob: function (job) {
+        var employerAndTitle = format(HTMLworkEmployer, job.employer) +
+            format(HTMLworkTitle, job.title);
+        return $(HTMLworkStart).append(
+            employerAndTitle,
+            format(HTMLworkLocation, job.location),
+            format(HTMLworkDates, job.dates),
+            format(HTMLworkDescription, job.description)
+        );
+    }
+ };
+
 bio.display();
 education.display();
+work.display();
