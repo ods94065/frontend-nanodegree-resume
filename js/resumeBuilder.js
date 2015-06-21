@@ -90,7 +90,7 @@ var bio = {
             $.map(this.contacts, this.formatContact));
     },
     formatSkill: function (skill) {
-        return format(HTMLskills, skill)
+        return format(HTMLskills, skill);
     },
     formatContact: function (contactValue, fieldName) {
         return format(HTMLcontactGeneric, contactValue, {contact: fieldName});
