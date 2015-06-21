@@ -54,14 +54,14 @@ var bio = {
         location: "Redwood City, CA"
     },
     welcomeMessage: "I'm a senior software developer with particular " +
-        "interest in internet technologies, programming languages, " +
-        "functional programming, and emerging technologies.",
+        "interest in emerging internet technologies, programming languages, " +
+        "and functional programming.",
     skills: [
-        "Web Development",
-        "Deployment",
-        "Leadership",
-        "Communication",
-        "Mentoring"
+        "web development",
+        "deployment",
+        "software architecture",
+        "leadership",
+        "mentoring"
     ],
     biopic: "images/owen.jpg",
     display: function () {
